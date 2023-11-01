@@ -38,6 +38,6 @@ public partial class MySnacksViewModel : ObservableObject
                 Image: new Uri("https://imgbb.com/"),
                 Savoury: new List<string> {"FoodA","FoodB","FoodC"},
                 Sweet:new List<string> {"SweetA","SweetB","SweetC"})
-        }
+        };
     }
 }

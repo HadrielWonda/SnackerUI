@@ -1,41 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SnackerUI.ViewModels"
+              xmlns:models="clr-namespace:SnackerUI.Models"
+             x:DataType="viewmodels:MySnacksViewModel"
              x:Class="SnackerUI.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Grid Padding="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="AUTO"/>
+        </Grid.RowDefinitions>
+        
+        <!--Your Snack -->
+        <HorizontalStackLayout>
+            <Label FontFamily="RobotoBold" FontSize="24" Text="Your "/>
+            <Label FontFamily="RobotoBold" FontSize="24" Text=" Snacks" TextColor="CornflowerBlue"/>
+        </HorizontalStackLayout>
+        
+        <!-- Snacks you've made-->
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+        <Label Text="Snacks you have created"
+               Grid.Row="2"
+               TextColor="GreenYellow"/>
+        
+        <!-- Scrollable list of Snacks-->
+        <CollectionView ItemsSource="{Binding Snacks}"
+                        Grid.Row="2">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="20"/>
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Snack">
+                    <Border MinimumHeightRequest="315"
+                            Stroke="Azure">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                            <Image Source="{Binding Image}"
+                                   Aspect="AspectFill"/>
+                        </Grid>
+                        
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
 
-        </VerticalStackLayout>
-    </ScrollView>
+            <!-- Create New Snack Button-->
+        <Button Text="Order Snack"
+               CornerRadius="2"
+               Grid.Row="3"
+               TextColor="DarkKhaki"
+               Padding="16"
+               />
+
+    </Grid>
 
 </ContentPage>
