@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SnackerUI.Models;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,25 @@ public partial class MySnacksViewModel : ObservableObject
     [ObservableProperty]
     List<Snack> snacks;
 
+    [ObservableProperty]
+    bool isRefreshing;
+
     public MySnacksViewModel()
     {
-        LoadSnacks();
+        LoadSnacksAsync();
     }
 
-    private void LoadSnacks()
+    
+
+    [RelayCommand]
+    public async void Task<LoadSnacksAsync>()
     {
-        Snacks = new()
+        try
         {
+
+          await Task.Delay(2000);
+          Snacks = new()
+          {
             new Snack(
                 Name: "Wales Treat 1",
                 Description:"Wales first treat for you",
@@ -38,6 +49,13 @@ public partial class MySnacksViewModel : ObservableObject
                 Image: new Uri("https://imgbb.com/"),
                 Savoury: new List<string> {"FoodA","FoodB","FoodC"},
                 Sweet:new List<string> {"SweetA","SweetB","SweetC"})
-        };
+               };
+
+        }
+        finally
+        {
+            IsRefreshing = false;
+        }
     }
+        
 }

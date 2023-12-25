@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:SnackerUI.ViewModels"
-              xmlns:models="clr-namespace:SnackerUI.Models"
+             xmlns:models="clr-namespace:SnackerUI.Models"
              x:DataType="viewmodels:MySnacksViewModel"
              x:Class="SnackerUI.MainPage">
 
@@ -27,8 +27,14 @@
                TextColor="GreenYellow"/>
         
         <!-- Scrollable list of Snacks-->
+        <RefreshView Grid.Row="2"
+                     Margin="0,16"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding LoadSnacksCommand}"
+            />
+
         <CollectionView ItemsSource="{Binding Snacks}"
-                        Grid.Row="2">
+                        >
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical"
                                    ItemSpacing="20"/>
@@ -47,6 +53,70 @@
 
                             <Image Source="{Binding Image}"
                                    Aspect="AspectFill"/>
+
+                            <Grid Grid.Column="1" Padding="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="AUTO"/>
+                                    <RowDefinition Height="AUTO"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="AUTO"/>
+                                    <RowDefinition Height="AUTO"/>
+                                </Grid.RowDefinitions>
+                                
+                                <!-- Name -->
+                                <Label Text="{Binding Name}"
+                                       FontSize="24"
+                                       FontFamily="RobotoBold"/>
+
+
+                                <!-- Start and End DateTime -->
+                                <Label Text="Tomorrow, 8:00 - 11:00 AM"
+                                     FontSize="16"
+                                       Grid.Row="1"/>
+                                
+                                <!-- Description -->
+                                <Label Text="{Binding Description}"
+                                       Grid.Row="2"
+                                       Padding="0,8,0,8"
+                                       TextColor="Aquamarine"/>
+                                
+                                <!-- Savory -->
+                                <FlexLayout BindableLayout.ItemsSource="{Binding Savoury}"
+                                            Grid.Row="3"
+                                            Wrap="NoWrap"
+                                            AlignItems="Start">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame Padding="6"
+                                                   Margin="1"
+                                                   BorderColor="Transparent"
+                                                   BackgroundColor="Bisque">
+                                                <Label Text="{Binding .}"/>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+                                
+                                <!-- Sweet -->
+                    <FlexLayout BindableLayout.ItemsSource="{Binding Sweet}"
+                           Grid.Row="3"
+                           Wrap="NoWrap"
+                           AlignItems="Start">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                       <Frame Padding="6"
+                                         Margin="1"
+                                         BorderColor="Transparent"
+                                         BackgroundColor="Bisque">
+                                                <Label Text="{Binding .}"/>
+                                       </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+
+
+                            </Grid>
+
                         </Grid>
                         
                     </Border>
